@@ -1,0 +1,151 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+
+	margin: 0;
+	border: 0;
+}
+
+body {
+	font-family: 'Inter', Arial, sans-serif;
+	background-color: #fafafa;
+}
+
+/* Buttons don't inherit font by default */
+button {
+	font-family: inherit;
+}
+
+/* Basic page formatting upwards */
+
+/* Top bar formatting */
+
+.top-bar {
+	background-color: #ffffff;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 20px 80px;
+	border-bottom: 1px solid #d5d5d5;
+}
+
+.top-bar a {
+	color: #364153ca;
+	font-weight: 500;
+	font-size: medium;
+	text-decoration: solid;
+}
+
+.links-wrapper {
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
+}
+
+#logo-text {
+	color: rgba(0, 0, 0, 0.652);
+	font-size: x-large;
+}
+
+/* Hero formatting */
+.hero-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px 130px;
+	gap: 26px;
+}
+
+.header {
+	margin: 20px 0;
+}
+
+.subheader {
+	margin: 6px 0;
+}
+
+/* #calculator-card * {
+	border: 2px red solid;
+} */
+
+/* Calculator card */
+
+#calculator-card {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+
+	border: 4px solid #54545477;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 34px 12px;
+}
+
+#display {
+	background-color: #dfff0d;
+	height: 80px;
+	border-bottom: 4px solid #e9e9e977;
+	padding: 12px;
+
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#display-text {
+	font-size: x-large;
+	font-weight: 600;
+}
+
+#container,
+.row {
+	gap: 12px;
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+
+	padding: 20px;
+
+	background-color: #6d2ff2;
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Set correct button image size */
+.btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	aspect-ratio: 1/1;
+	padding: 16px;
+
+	height: 60px;
+	width: 60px;
+
+	border-radius: 50%;
+	border: 3px dotted #000000;
+	background-color: #36a8fe;
+
+	font-size: x-large;
+	font-weight: 700;
+	color: white;
+}
+
+.btn > img {
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+}
+
+.btn:has(img) {
+	padding: 12px;
+}
