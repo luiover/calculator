@@ -105,7 +105,8 @@ for (const button of buttons) {
 }
 
 function abort() {
-	console.log('The expression is incomplete! Aborting');
+	alert('The expression is incomplete!');
+	// console.log('The expression is incomplete! Aborting');
 }
 
 function calculate() {
