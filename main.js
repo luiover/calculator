@@ -1,3 +1,4 @@
+const decimalLimit = 6; // Limit the number of decimals
 let num1 = '',
 	num2 = '',
 	operator = '';
@@ -20,10 +21,14 @@ for (const button of buttons) {
 				break;
 
 			case 'delete':
-				canc();
+				cancelLast();
 				break;
 
 			case '=':
+				if (!num2 || !operator) {
+					console.log('The expression is incomplete! Aborting');
+					break;
+				}
 				calculate();
 				break;
 
@@ -60,12 +65,13 @@ for (const button of buttons) {
 function calculate() {
 	// Evaluate the result to be the new num1
 	num1 = operate(num1, operator, num2);
+	num1 = limitDecimals(num1);
 	operator = '';
 	num2 = '';
 	display.textContent = num1;
 }
 
-function canc() {
+function cancelLast() {
 	lastChar = display.textContent.slice(-1);
 	display.textContent = display.textContent.slice(0, -1);
 	// Check if an operator or number has been removed to update it
@@ -73,6 +79,18 @@ function canc() {
 		operator = '';
 	} else {
 		num1 = String(num1).slice(0, -1);
+	}
+}
+
+function limitDecimals(number) {
+	// Count the number of decimals
+	const decimal = String(number)?.split('.')[1];
+	if (decimal && decimal.length > decimalLimit) {
+		const shorterNum = Number(number).toFixed(decimalLimit);
+		return shorterNum;
+		console.log(shorterNum);
+	} else {
+		return number;
 	}
 }
 
