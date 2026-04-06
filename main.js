@@ -1,7 +1,7 @@
 const decimalLimit = 6; // Limit the number of decimals
 const errorText = 'Error 404 ☠️🪦';
 let clearAfterResult = true;
-let tempResult = false;
+let tempResult = true;
 
 let num1 = '',
 	num2 = '',

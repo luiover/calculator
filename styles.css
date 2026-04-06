@@ -134,7 +134,7 @@ button {
 	width: 60px;
 
 	border-radius: 50%;
-	border: 4px dotted #000000;
+	border: 4px dashed #000000;
 	background-color: #36a8fe;
 
 	font-size: xx-large;
