@@ -1,4 +1,8 @@
 const decimalLimit = 6; // Limit the number of decimals
+const errorText = 'Error 404 ☠️🪦';
+const clearAfterResult = true;
+let tempResult = false;
+
 let num1 = '',
 	num2 = '',
 	operator = '';
@@ -15,6 +19,11 @@ for (const button of buttons) {
 		const btnElement = e.target.closest('.btn');
 		const value = btnElement.dataset.value;
 
+		if (tempResult) {
+			clearDisplay();
+			tempResult = false;
+		}
+
 		switch (value) {
 			case 'clear':
 				clearDisplay();
@@ -26,7 +35,7 @@ for (const button of buttons) {
 
 			case '=':
 				if (!num2 || !operator) {
-					console.log('The expression is incomplete! Aborting');
+					abort();
 					break;
 				}
 				calculate();
@@ -35,6 +44,17 @@ for (const button of buttons) {
 			default:
 				// Check if the button is an operator
 				if (isNaN(value)) {
+					// If no num1 yet, treat + or - as number part, else it's a mistake
+					if (!num1) {
+						if (value === '-' || value === '+') {
+							num1 += value;
+							display.textContent += value;
+						} else {
+							abort();
+						}
+						break;
+					}
+
 					// If the operator is already assigned, replace it
 					if (operator) {
 						if (num2) {
@@ -58,8 +78,12 @@ for (const button of buttons) {
 				}
 				display.textContent += value;
 		}
-		console.log(num1, operator, num2);
+		console.log('Num1:', num1, 'Op:', operator, 'Num2:', num2);
 	});
+}
+
+function abort() {
+	console.log('The expression is incomplete! Aborting');
 }
 
 function calculate() {
@@ -68,6 +92,17 @@ function calculate() {
 	num1 = limitDecimals(num1);
 	operator = '';
 	num2 = '';
+
+	// Handle numbers divided by 0 with an error message
+	if (num1 === Infinity || Number.isNaN(num1)) {
+		num1 = errorText;
+		tempResult = true;
+	}
+
+	if (clearAfterResult) {
+		tempResult = true;
+	}
+
 	display.textContent = num1;
 }
 
@@ -115,6 +150,8 @@ function operate(num1, operator, num2) {
 			return multiply(Number(num1), Number(num2));
 		case '/':
 			return divide(Number(num1), Number(num2));
+		case '%':
+			return modulo(Number(num1), Number(num2));
 	}
 }
 
@@ -132,4 +169,8 @@ function multiply(num1, num2) {
 
 function divide(num1, num2) {
 	return num1 / num2;
+}
+
+function modulo(num1, num2) {
+	return num1 % num2;
 }
