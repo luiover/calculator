@@ -1,2 +1,2 @@
 # calculator
-Website for a fully-featured calculatorm part of a "The Odin Project" assignment
+Website for a fully-featured calculator part of a "The Odin Project" assignment
