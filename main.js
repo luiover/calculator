@@ -24,11 +24,7 @@ for (const button of buttons) {
 				break;
 
 			case '=':
-				// Evaluate the result to be the new num1
-				num1 = operate(num1, operator, num2);
-				operator = '';
-				num2 = '';
-				display.textContent = num1;
+				calculate();
 				break;
 
 			default:
@@ -36,6 +32,14 @@ for (const button of buttons) {
 				if (isNaN(value)) {
 					// If the operator is already assigned, replace it
 					if (operator) {
+						if (num2) {
+							// Write the result and append the operator
+							calculate();
+							display.textContent += value;
+							// Set the second operator to be the current
+							operator = value;
+							break;
+						}
 						display.textContent = display.textContent.slice(0, -1);
 					}
 					operator = value;
@@ -51,6 +55,14 @@ for (const button of buttons) {
 		}
 		console.log(num1, operator, num2);
 	});
+}
+
+function calculate() {
+	// Evaluate the result to be the new num1
+	num1 = operate(num1, operator, num2);
+	operator = '';
+	num2 = '';
+	display.textContent = num1;
 }
 
 function canc() {
