@@ -1,6 +1,6 @@
 const decimalLimit = 6; // Limit the number of decimals
 const errorText = 'Error 404 ☠️🪦';
-const clearAfterResult = true;
+let clearAfterResult = true;
 let tempResult = false;
 
 let num1 = '',
@@ -9,9 +9,31 @@ let num1 = '',
 const buttons = document.querySelectorAll('.btn');
 const display = document.querySelector('#display-text');
 
+const toggleClear = document.querySelector('#toggleClear');
+const boop = document.querySelector('#boop');
+
 // Set num1 to match display
 num1 = display.textContent;
 console.log(num1);
+
+boop.addEventListener('click', (e) => alert('Beep! 🚨'));
+
+toggleClear.addEventListener('click', (e) => {
+	const btnClass = [...e.target.classList];
+	if (btnClass.some((item) => item === 'active')) {
+		// Disable clearAfterResult
+		e.target.classList.remove('active');
+		e.target.classList.add('inactive');
+		clearAfterResult = false;
+	} else {
+		// Enable clearAfterResult
+		e.target.classList.remove('inactive');
+		e.target.classList.add('active');
+		clearAfterResult = true;
+	}
+	console.log(btnClass);
+	e.target;
+});
 
 // Handle calculator button presses
 for (const button of buttons) {
