@@ -1,7 +1,14 @@
-let num1, num2, operator;
+let num1 = '',
+	num2 = '',
+	operator = '';
 const buttons = document.querySelectorAll('.btn');
 const display = document.querySelector('#display-text');
 
+// Set num1 to match display
+num1 = display.textContent;
+console.log(num1);
+
+// Handle calculator button presses
 for (const button of buttons) {
 	button.addEventListener('click', (e) => {
 		const btnElement = e.target.closest('.btn');
@@ -9,32 +16,75 @@ for (const button of buttons) {
 
 		switch (value) {
 			case 'clear':
-				display.textContent = '';
+				clearDisplay();
 				break;
 
 			case 'delete':
-				display.textContent = display.textContent.slice(0, -1);
+				canc();
 				break;
 
 			case '=':
-				const displayText = display.textContent;
+				// Evaluate the result to be the new num1
+				num1 = operate(num1, operator, num2);
+				operator = '';
+				num2 = '';
+				display.textContent = num1;
+				break;
 
 			default:
+				// Check if the button is an operator
+				if (isNaN(value)) {
+					// If the operator is already assigned, replace it
+					if (operator) {
+						display.textContent = display.textContent.slice(0, -1);
+					}
+					operator = value;
+				} else {
+					// Update num1 or num2 based on whether an operator is assigned
+					if (!operator) {
+						num1 += value;
+					} else {
+						num2 += value;
+					}
+				}
 				display.textContent += value;
 		}
+		console.log(num1, operator, num2);
 	});
+}
+
+function canc() {
+	lastChar = display.textContent.slice(-1);
+	display.textContent = display.textContent.slice(0, -1);
+	// Check if an operator or number has been removed to update it
+	if (isNaN(lastChar)) {
+		operator = '';
+	} else {
+		num1 = String(num1).slice(0, -1);
+	}
+}
+
+function clearDisplay() {
+	display.textContent = '';
+	clearVariables();
+}
+
+function clearVariables() {
+	num1 = '';
+	num2 = '';
+	operator = '';
 }
 
 function operate(num1, operator, num2) {
 	switch (operator) {
 		case '+':
-			return add(num1, num2);
+			return add(Number(num1), Number(num2));
 		case '-':
-			return subtract(num1, num2);
+			return subtract(Number(num1), Number(num2));
 		case '*':
-			return multiply(num1, num2);
+			return multiply(Number(num1), Number(num2));
 		case '/':
-			return divide(num1, num2);
+			return divide(Number(num1), Number(num2));
 	}
 }
 
