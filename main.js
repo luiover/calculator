@@ -72,6 +72,9 @@ function handleButton(value) {
 				break;
 			}
 
+			// Only allow 1 operator sign
+			if (num1 === '-' || num1 === '+') return abort();
+
 			// Check if an operator is already typed
 			if (operator) {
 				// Handle case where an expression is already typed
