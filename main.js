@@ -9,6 +9,7 @@ let num1 = '',
 const buttons = document.querySelectorAll('.btn');
 const display = document.querySelector('#display-text');
 
+const dotButton = document.querySelector('#dot');
 const toggleClear = document.querySelector('#toggleClear');
 const boop = document.querySelector('#boop');
 
@@ -16,7 +17,7 @@ const boop = document.querySelector('#boop');
 num1 = display.textContent;
 console.log(num1);
 
-// // // // // // // // // // // // // // // // // //
+// EVENT LISTENERS // // // // // // // // // // // //
 // Assign button click logic to each calculator button
 for (const button of buttons) {
 	button.addEventListener('click', buttonClicked);
@@ -80,9 +81,18 @@ function buttonClicked(e) {
 				}
 			}
 
+			// Check whether the number isn't valid
+			if (num1 === '.' || num2 === '.') {
+				abort();
+				break;
+			}
+
 			// Add the operator
 			operator = value;
 			display.textContent += value;
+
+			// Allow again dots
+			dotButton.disabled = false;
 	}
 	// Debugging purposes
 	console.log('Num1:', num1, 'Op:', operator, 'Num2:', num2);
@@ -135,9 +145,18 @@ function clearDisplay() {
 function cancelLast() {
 	lastChar = display.textContent.slice(-1);
 	display.textContent = display.textContent.slice(0, -1);
+
+	// Re-enable dot if it has been removed
+	if (lastChar === '.') {
+		dotButton.disabled = false;
+		return;
+	}
+
 	// Check if an operator or number has been removed to update it
 	if (isNaN(lastChar)) {
 		operator = '';
+		// Check if dot should be blocked now
+		noMultipleDots(num1);
 	} else {
 		num1 = String(num1).slice(0, -1);
 	}
@@ -173,16 +192,25 @@ function updateNumVariable(value) {
 	// Update num1 or num2 based on whether an operator is assigned
 	if (!operator) {
 		num1 += value;
+		noMultipleDots(num1);
 	} else {
 		num2 += value;
+		noMultipleDots(num2);
 	}
 	display.textContent += value;
+}
+
+function noMultipleDots(number) {
+	if (String(number).includes('.')) {
+		dotButton.disabled = true;
+	}
 }
 
 function clearVariables() {
 	num1 = '';
 	num2 = '';
 	operator = '';
+	dotButton.disabled = false;
 }
 
 // Mathematical operations
