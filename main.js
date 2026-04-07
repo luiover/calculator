@@ -20,18 +20,22 @@ console.log(num1);
 // EVENT LISTENERS // // // // // // // // // // // //
 // Assign button click logic to each calculator button
 for (const button of buttons) {
-	button.addEventListener('click', buttonClicked);
+	button.addEventListener('click', (e) => {
+		// Get the button char
+		const btnElement = e.target.closest('.btn');
+		const value = btnElement.dataset.value;
+		handleButton(value);
+	});
 }
+// Alternatively use keyboard presses
+document.addEventListener('keydown', keyPressed);
 
 // Extra buttons click event logic
 boop.addEventListener('click', (e) => alert('Beep! 🚨'));
 toggleClear.addEventListener('click', toggleClearFn);
 // // // // // // // // // // // // // // // // // //
 
-function buttonClicked(e) {
-	const btnElement = e.target.closest('.btn');
-	const value = btnElement.dataset.value;
-
+function handleButton(value) {
 	if (tempResult) {
 		clearDisplay();
 		tempResult = false;
@@ -98,20 +102,47 @@ function buttonClicked(e) {
 	console.log('Num1:', num1, 'Op:', operator, 'Num2:', num2);
 }
 
-function toggleClearFn(e) {
-	const btnClass = [...e.target.classList];
+function keyPressed(e) {
+	let pressedKey = e.key.toLowerCase();
+
+	console.log(pressedKey);
+
+	switch (pressedKey) {
+		case 'enter':
+			pressedKey = '=';
+			break;
+		case 'backspace':
+			pressedKey = 'delete';
+			break;
+		case 'delete':
+			pressedKey = 'clear';
+			break;
+		case 't':
+			toggleClearFn();
+			return;
+	}
+
+	const calcButton = document.querySelector(`.btn[data-value="${pressedKey}"]`);
+
+	// Check if the pressed key corresponds to a calculator button
+	if (calcButton) {
+		handleButton(pressedKey);
+	}
+}
+
+function toggleClearFn() {
+	const btnClass = [...toggleClear.classList];
 	if (btnClass.some((item) => item === 'active')) {
 		// Disable clearAfterResult
-		e.target.classList.remove('active');
-		e.target.classList.add('inactive');
+		toggleClear.classList.remove('active');
+		toggleClear.classList.add('inactive');
 		clearAfterResult = false;
 	} else {
 		// Enable clearAfterResult
-		e.target.classList.remove('inactive');
-		e.target.classList.add('active');
+		toggleClear.classList.remove('inactive');
+		toggleClear.classList.add('active');
 		clearAfterResult = true;
 	}
-	e.target;
 }
 
 // Input handling and formatting helpers
