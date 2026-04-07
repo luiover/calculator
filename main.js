@@ -15,7 +15,6 @@ const boop = document.querySelector('#boop');
 
 // Set num1 to match display
 num1 = display.textContent;
-console.log(num1);
 
 // EVENT LISTENERS // // // // // // // // // // // //
 // Assign button click logic to each calculator button
@@ -68,7 +67,7 @@ function handleButton(value) {
 			}
 
 			// Handle early operator button
-			if (!num1) {
+			if (num1 === '') {
 				handleStartingSymbol(value);
 				break;
 			}
@@ -104,8 +103,6 @@ function handleButton(value) {
 
 function keyPressed(e) {
 	let pressedKey = e.key.toLowerCase();
-
-	console.log(pressedKey);
 
 	switch (pressedKey) {
 		case 'enter':
