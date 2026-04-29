@@ -37,8 +37,3 @@ With this project, I demonstrate my abilities of
 
 Let me know what you think about this project! Pros, cons, bugs, fixes, ...
 I'm happy to accept your pull requests, or modify them as needed 😁
-
-Rearrange if-blocks & return number
-
-Made code easier to read avoiding deep nesting and optimized to avoid repeated code
-and now return, after approximation of a float, a Number type to remove trailing 0s
